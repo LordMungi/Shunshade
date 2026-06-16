@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private const float RAY_MAX_LENGTH = 100f;
+    [SerializeField] private LayerMask grabPlaneLayer;
+    [SerializeField] private LayerMask grabbableLayer;
+
+    private const float RAY_MAX_LENGTH = 10000f;
 
     private GameObject grabbedObject;
 
@@ -15,15 +18,13 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, RAY_MAX_LENGTH))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, RAY_MAX_LENGTH, grabbableLayer))
             {
+                Debug.Log("hit: " + hit.transform.name);
                 if (hit.collider != null)
                 {
-                    if (hit.transform.CompareTag(Item.GrabbableTag))
-                    {
-                        grabbedObject = hit.transform.gameObject;
-                    }
-                    
+                    Debug.Log("grab");
+                    grabbedObject = hit.transform.gameObject;
                 }
             }
         }
@@ -38,8 +39,11 @@ public class GameManager : MonoBehaviour
 
     private void MoveGrabbedObject()
     {
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, RAY_MAX_LENGTH, grabPlaneLayer))
+            Debug.Log(hit.point);
+
         if (grabbedObject != null)
-            grabbedObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
+            grabbedObject.transform.position = hit.point + new Vector3(0, grabbedObject.transform.lossyScale.y / 2);
     }
 
     private void OnDrawGizmos()
