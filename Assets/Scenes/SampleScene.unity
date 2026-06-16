@@ -212,7 +212,8 @@ MonoBehaviour:
   - {fileID: 9048580821406843393, guid: 77a3539eb5461654b93bc05134816069, type: 3}
   - {fileID: 9048580821406843393, guid: 77a3539eb5461654b93bc05134816069, type: 3}
   - {fileID: 9048580821406843393, guid: 77a3539eb5461654b93bc05134816069, type: 3}
-  launchForce: {x: 0, y: 1, z: 1}
+  launchVector: {x: 0, y: 1, z: 0.5}
+  launchForce: 250
   GeneratorClickedEvent: {fileID: 11400000, guid: b51a2463d6146cb4d88993af7de83385, type: 2}
 --- !u!65 &253685498
 BoxCollider:
