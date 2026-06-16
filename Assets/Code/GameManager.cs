@@ -5,9 +5,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LayerMask grabPlaneLayer;
     [SerializeField] private LayerMask grabbableLayer;
 
+    [SerializeField] private float grabbedObjectHeight = 1f;
+
     private const float RAY_MAX_LENGTH = 10000f;
 
     private GameObject grabbedObject;
+    private Rigidbody grabbedObjectBody;
 
     void Start()
     {
@@ -20,19 +23,27 @@ public class GameManager : MonoBehaviour
         {
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, RAY_MAX_LENGTH, grabbableLayer))
             {
-                Debug.Log("hit: " + hit.transform.name);
                 if (hit.collider != null)
                 {
-                    Debug.Log("grab");
-                    grabbedObject = hit.transform.gameObject;
+                    grabbedObjectBody = hit.transform.GetComponent<Rigidbody>();
+                    if (grabbedObjectBody != null)
+                    {
+                        grabbedObject = hit.transform.gameObject;
+                        grabbedObjectBody.isKinematic = true;
+                    }
                 }
             }
         }
         if (Input.GetMouseButtonUp(0))
         {
             grabbedObject = null;
+            grabbedObjectBody.isKinematic = false;
+            grabbedObjectBody = null;
         }
+    }
 
+    private void FixedUpdate()
+    {
         if (Input.GetMouseButton(0))
             MoveGrabbedObject();
     }
@@ -43,7 +54,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(hit.point);
 
         if (grabbedObject != null)
-            grabbedObject.transform.position = hit.point + new Vector3(0, grabbedObject.transform.lossyScale.y / 2);
+            grabbedObjectBody.MovePosition(hit.point + new Vector3(0, grabbedObjectHeight + grabbedObject.transform.lossyScale.y / 2));
     }
 
     private void OnDrawGizmos()
