@@ -4,8 +4,12 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private LayerMask grabPlaneLayer;
     [SerializeField] private LayerMask grabbableLayer;
+    [SerializeField] private LayerMask interactionLayer;
 
     [SerializeField] private float grabbedObjectHeight = 1f;
+
+    [Header("Broadcast Events")]
+    [SerializeField] EventChannel GeneratorClickedEvent;
 
     private const float RAY_MAX_LENGTH = 10000f;
 
@@ -21,15 +25,23 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, RAY_MAX_LENGTH, grabbableLayer))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, RAY_MAX_LENGTH, grabbableLayer | interactionLayer))
             {
                 if (hit.collider != null)
                 {
-                    grabbedObjectBody = hit.transform.GetComponent<Rigidbody>();
-                    if (grabbedObjectBody != null)
+                    if (hit.collider.gameObject.CompareTag("Generator"))
                     {
-                        grabbedObject = hit.transform.gameObject;
-                        grabbedObjectBody.isKinematic = true;
+                        Debug.Log("as");
+                        GeneratorClickedEvent.RaiseEvent();
+                    }
+                    else
+                    {
+                        grabbedObjectBody = hit.transform.GetComponent<Rigidbody>();
+                        if (grabbedObjectBody != null)
+                        {
+                            grabbedObject = hit.transform.gameObject;
+                            grabbedObjectBody.isKinematic = true;
+                        }
                     }
                 }
             }
