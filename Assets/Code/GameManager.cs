@@ -36,9 +36,7 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            grabbedObject = null;
-            grabbedObjectBody.isKinematic = false;
-            grabbedObjectBody = null;
+            ReleaseGrabbedObject();
         }
     }
 
@@ -50,11 +48,25 @@ public class GameManager : MonoBehaviour
 
     private void MoveGrabbedObject()
     {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, RAY_MAX_LENGTH, grabPlaneLayer))
-            Debug.Log(hit.point);
-
         if (grabbedObject != null)
-            grabbedObjectBody.MovePosition(hit.point + new Vector3(0, grabbedObjectHeight + grabbedObject.transform.lossyScale.y / 2));
+        {
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, RAY_MAX_LENGTH, grabPlaneLayer))
+                grabbedObjectBody.MovePosition(hit.point + new Vector3(0, grabbedObjectHeight + grabbedObject.transform.lossyScale.y / 2));
+            else
+                ReleaseGrabbedObject();
+        }
+
+    }
+
+    private void ReleaseGrabbedObject()
+    {
+        if (grabbedObject != null)
+        {
+            grabbedObject = null;
+            grabbedObjectBody.isKinematic = false;
+            grabbedObjectBody.linearVelocity = Vector3.zero;
+            grabbedObjectBody = null;
+        }
     }
 
     private void OnDrawGizmos()
