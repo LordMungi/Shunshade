@@ -2,30 +2,15 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [Header("Broadcast Events")]
-    [SerializeField] private EventChannel SampleEvent1;
-
-    [Header("Listener Events")]
-    [SerializeField] private EventChannel SampleEvent2;
-
-    private void OnEnable()
-    {
-        SampleEvent2.OnEventTriggered += Foo;
-    }
-
-    private void OnDisable()
-    {
-        SampleEvent2.OnEventTriggered -= Foo;
-    }
-
-    private void Foo()
-    {
-
-    }
+    static public string GrabbableTag = "Grabbable";
 
     private void Start()
     {
-        SampleEvent1.RaiseEvent();
+        tag = GrabbableTag;
+        foreach (Transform child in transform)
+        {
+            child.tag = GrabbableTag;
+        }
     }
 
 }

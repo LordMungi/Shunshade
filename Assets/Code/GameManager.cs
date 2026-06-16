@@ -19,7 +19,10 @@ public class GameManager : MonoBehaviour
             {
                 if (hit.collider != null)
                 {
-                    grabbedObject = hit.transform.gameObject;
+                    if (hit.transform.CompareTag(Item.GrabbableTag))
+                    {
+                        grabbedObject = hit.transform.gameObject;
+                    }
                     
                 }
             }
@@ -35,7 +38,8 @@ public class GameManager : MonoBehaviour
 
     private void MoveGrabbedObject()
     {
-        grabbedObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
+        if (grabbedObject != null)
+            grabbedObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
     }
 
     private void OnDrawGizmos()
