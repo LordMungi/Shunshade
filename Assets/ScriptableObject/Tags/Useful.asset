@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: baf05952dd5794d4aa7447992ea2cce3, type: 3}
-  m_Name: Red
+  m_Name: Useful
   m_EditorClassIdentifier: Assembly-CSharp::Tag
