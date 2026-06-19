@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,16 +14,20 @@ public class GameManager : MonoBehaviour
 
     [Header("Broadcast Events")]
     [SerializeField] EventChannel GeneratorClickedEvent;
+    [SerializeField] private EventChannel PauseGameEvent;
+    [SerializeField] private EventChannel UnpauseGameEvent;
 
     private const float RAY_MAX_LENGTH = 10000f;
 
     private Item grabbedObject;
     private Rigidbody grabbedObjectBody;
 
+    private bool isPaused;
     private int correctItems;
 
     void Start()
     {
+        Time.timeScale = 1;
         foreach (Item i in level.items)
         {
             foreach (Tag t in i.config.Tags)
@@ -70,6 +75,17 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             ReleaseGrabbedObject();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isPaused)
+            {
+                PauseGame();
+            }
+            else
+            {
+                UnpauseGame();               
+            }
         }
     }
 
@@ -133,5 +149,29 @@ public class GameManager : MonoBehaviour
             Debug.Log("Win");
         else
             Debug.Log("Missing");
+    }
+
+    public void PauseGame()
+    {
+        isPaused = true;
+        PauseGameEvent.RaiseEvent();
+        Time.timeScale = 0;
+    }
+
+    public void UnpauseGame()
+    {
+        isPaused = false;
+        UnpauseGameEvent.RaiseEvent();
+        Time.timeScale = 1;
+    }
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }
