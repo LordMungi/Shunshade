@@ -295,7 +295,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   parasol: {fileID: 153475120}
-  level: {fileID: 11400000, guid: 6401b406253ea4b40bc9b7ebb30ebf57, type: 2}
   grabbedObjectHeight: 1
   rotationSpeed: 10000
   GeneratorClickedEvent: {fileID: 11400000, guid: b51a2463d6146cb4d88993af7de83385, type: 2}
@@ -2428,7 +2427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2285572714762736480, guid: 73d73e8360c5159438886e731a224c93, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -164.7001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2401614646271341765, guid: 73d73e8360c5159438886e731a224c93, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2674,7 +2673,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 213
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6331646436538458480, guid: 73d73e8360c5159438886e731a224c93, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -2757,6 +2757,55 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 985616487661748558, guid: 73d73e8360c5159438886e731a224c93, type: 3}
   m_PrefabInstance: {fileID: 987598241}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1102900294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1102900296}
+  - component: {fileID: 1102900295}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1102900295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102900294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474cff153bd80c04bbca5dc8430813e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelManager
+  levels:
+  - {fileID: 11400000, guid: 6401b406253ea4b40bc9b7ebb30ebf57, type: 2}
+  - {fileID: 11400000, guid: 82ff6741fb15fd645b922dae157ea53a, type: 2}
+  - {fileID: 11400000, guid: 01de96ef66a4a9e4f9888276b1091bc8, type: 2}
+  currentLevel: {fileID: 0}
+--- !u!4 &1102900296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102900294}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 443.345, y: 0.00001, z: 4978.4067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1125217657
 GameObject:
   m_ObjectHideFlags: 0
@@ -4411,3 +4460,4 @@ SceneRoots:
   - {fileID: 1471687879}
   - {fileID: 1396773966}
   - {fileID: 1182710376}
+  - {fileID: 1102900296}

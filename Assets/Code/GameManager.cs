@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LayerMask interactionLayer;
 
     [SerializeField] private Parasol parasol;
-    [SerializeField] private LevelConfig level;
-
     [SerializeField] private float grabbedObjectHeight = 1f;
     [SerializeField] private float rotationSpeed = 100f;
 
@@ -26,9 +24,13 @@ public class GameManager : MonoBehaviour
     private bool isPaused;
     private int correctItems;
 
+    private LevelConfig level;
+
     void Start()
     {
         Time.timeScale = 1;
+        level = LevelManager.instance.currentLevel;
+
         foreach (Item i in level.items)
         {
             foreach (Tag t in i.config.Tags)
@@ -161,9 +163,14 @@ public class GameManager : MonoBehaviour
         }
 
         if (checkedCorrect >= correctItems && itemsChecked <= checkedCorrect)
-            Debug.Log("Win");
+        {
+            LevelManager.instance.nextLevel();
+            ResetGame();
+        }
         else
-            Debug.Log("Missing");
+        {
+
+        }
     }
 
     public void PauseGame()

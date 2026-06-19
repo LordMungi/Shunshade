@@ -71,6 +71,5 @@ public class SettingsManager : MonoBehaviour
             mixer.SetFloat(group, Mathf.Log10(Mathf.Clamp(value, 0f, 1f)) * 20);
         else
             mixer.SetFloat(group, Mathf.Log10(0.5f * 20));
-        Debug.Log(value);
     }
 }
